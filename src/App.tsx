@@ -1,10 +1,13 @@
 import React from "react";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import Coins from "./Pages/Coins";
 import Coin from "./Pages/Coin";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Chart from "./Pages/Chart";
 import Price from "./Pages/Price";
+import { darkTheme, lightTheme } from "./theme";
+import useDarkMode from "./Hook/useDarkMode";
+import ThemeContext from "./Context/ThemeContext";
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -59,29 +62,33 @@ const GlobalStyle = createGlobalStyle`
     font-family : 'Source Sans Pro', sans-serif;
     background-color : ${(props) => props.theme.bgColor};
     color : ${(props) => props.theme.textColor}
-
   }
   a {
     text-decoration : none;
     color : ${(props) => props.theme.bgColor};
     color : inherit;
   }
+
 `;
 
 function App() {
+  const [isDarkMode, toggleDarkMode] = useDarkMode();
+
   return (
-    <>
-      <GlobalStyle />
-      <Router basename={process.env.PUBLIC_URL}>
-        <Routes>
-          <Route path="/" element={<Coins />} />
-          <Route path="/:coinId" element={<Coin />}>
-            <Route path="chart" element={<Chart />} />
-            <Route path="price" element={<Price />} />
-          </Route>
-        </Routes>
-      </Router>
-    </>
+    <ThemeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+        <GlobalStyle />
+        <Router basename={process.env.PUBLIC_URL}>
+          <Routes>
+            <Route path="/" element={<Coins />} />
+            <Route path="/:coinId" element={<Coin />}>
+              <Route path="chart" element={<Chart />} />
+              <Route path="price" element={<Price />} />
+            </Route>
+          </Routes>
+        </Router>
+      </ThemeProvider>
+    </ThemeContext.Provider>
   );
 }
 

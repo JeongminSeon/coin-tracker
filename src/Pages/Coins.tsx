@@ -12,7 +12,11 @@ const Header = styled.header`
   align-items: center;
 `;
 
-const Container = styled.div``;
+const Container = styled.div`
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 0 1rem;
+`;
 
 const CoinsList = styled.ul``;
 

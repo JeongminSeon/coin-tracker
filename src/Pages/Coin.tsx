@@ -13,6 +13,7 @@ import {
 import Chart from "./Chart";
 import Price from "./Price";
 import { Helmet } from "react-helmet";
+import DarkModeBtn from "../Component/DarkModeBtn";
 
 type RoutePrarms = {
   [key: string]: string | undefined;
@@ -108,6 +109,10 @@ export default function Coin() {
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
       </Header>
+      <Navbar>
+        <Link to="/">Home</Link>
+        <DarkModeBtn />
+      </Navbar>
       {loading ? (
         <Loader>Loading...</Loader>
       ) : (
@@ -147,7 +152,7 @@ export default function Coin() {
             </Tab>
           </Tabs>
 
-          <Outlet context={{ coinId }} />
+          <Outlet context={{ coinId, coinName: infoData?.name }} />
         </>
       )}
     </Container>
@@ -214,4 +219,13 @@ const Tab = styled.span<{ isActive: boolean }>`
     padding: 7px 0px;
     display: block;
   }
+`;
+
+const Navbar = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+  padding: 10px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.5);
 `;
