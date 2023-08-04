@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const Header = styled.header`
   height: 15vh;
@@ -62,8 +63,12 @@ interface ICoin {
 export default function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>(["allCoins"], fetchCoins);
 
+  console.log(data?.slice(0, 100));
   return (
     <Container>
+      <Helmet>
+        <title>코인</title>
+      </Helmet>
       <Header>
         <Title>코인</Title>
       </Header>
@@ -73,7 +78,7 @@ export default function Coins() {
         <CoinsList>
           {data?.slice(0, 100).map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`ß${coin.id}`}>
+              <Link to={`/${coin.id}`} state={coin}>
                 <Img
                   src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
                 />
