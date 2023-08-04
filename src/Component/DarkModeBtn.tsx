@@ -15,5 +15,6 @@ const Button = styled.button`
   &: hover {
     color: orange;
     transition: color 0.5s, transform 0.2s;
+    cursor: pointer;
   }
 `;

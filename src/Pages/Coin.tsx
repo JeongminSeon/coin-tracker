@@ -110,7 +110,9 @@ export default function Coin() {
         </Title>
       </Header>
       <Navbar>
-        <Link to="/">Home</Link>
+        <Link to="/">
+          <Home>Home</Home>
+        </Link>
         <DarkModeBtn />
       </Navbar>
       {loading ? (
@@ -228,4 +230,11 @@ const Navbar = styled.div`
   align-items: center;
   justify-content: space-between;
   background-color: rgba(0, 0, 0, 0.5);
+`;
+
+const Home = styled.span`
+  &: hover {
+    color: orange;
+    transition: color 0.5s, transform 0.2s;
+  }
 `;
